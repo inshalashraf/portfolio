@@ -9,8 +9,8 @@ export const Contact = () => {
                         <div className="contact-box">
                             <h2>Let's Connect</h2>
                             <p>I'm open to internship opportunities, software development roles, and meaningful projects.</p>
-                            <a className="contact-button" href="mailto:inshalashraf2004@gmail.com">
-                                Email Me
+                            <a className="contact-button" href="https://github.com/inshalashraf" target="_blank" rel="noopener noreferrer">
+                                Visit GitHub
                             </a>
                         </div>
                     </Col>
