@@ -13,11 +13,12 @@ export const Banner = () => {
     const period = 1600
 
     // The typing callback intentionally updates state on each timer tick.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         const ticker = setInterval(() => tick(), delta)
         return () => clearInterval(ticker)
     }, [text, delta, isDeleting, loopNum])
+    /* eslint-enable react-hooks/exhaustive-deps */
 
     const tick = () => {
         const i = loopNum % toRotate.length
