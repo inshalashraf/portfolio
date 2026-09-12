@@ -12,6 +12,8 @@ export const Banner = () => {
     const toRotate = ["Software Engineer", "Backend Developer", "Data Science Student"]
     const period = 1600
 
+    // The typing callback intentionally updates state on each timer tick.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const ticker = setInterval(() => tick(), delta)
         return () => clearInterval(ticker)
