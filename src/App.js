@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 const projects = [
@@ -28,12 +28,24 @@ const skillGroups = [
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
+  useEffect(() => {
+    const reveal = document.querySelectorAll('.reveal')
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible')), { threshold: 0.12 })
+    reveal.forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   const closeMenu = () => setMenuOpen(false)
+  const moveGlow = e => {
+    document.documentElement.style.setProperty('--mx', `${e.clientX}px`)
+    document.documentElement.style.setProperty('--my', `${e.clientY}px`)
+  }
 
   return (
-    <div className="site-shell">
+    <div className="site-shell" onMouseMove={moveGlow}>
+      <div className="cursor-glow" />
       <nav className="nav">
-        <a className="brand" href="#home" onClick={closeMenu}><span>IA</span> Inshal Ashraf</a>
+        <a className="brand" href="#home" onClick={closeMenu}><span>IA</span> INSHAL ASHRAF</a>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">☰</button>
         <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
           {['About', 'Experience', 'Projects', 'Skills', 'Contact'].map(item => <a key={item} href={`#${item.toLowerCase()}`} onClick={closeMenu}>{item}</a>)}
@@ -44,68 +56,43 @@ function App() {
       <main>
         <section id="home" className="hero section-wrap">
           <div className="hero-copy">
-            <div className="eyebrow"><i /> SOFTWARE ENGINEERING · DATA SCIENCE</div>
-            <h1>Building software that is <em>useful, reliable &amp; human.</em></h1>
-            <p className="hero-lead">I'm Inshal Ashraf, a CSE (Data Science) student at SRMIST focused on backend engineering, DSA, and data-driven applications.</p>
-            <div className="hero-actions">
-              <a className="button primary" href="#projects">Explore my work <span>→</span></a>
-              <a className="button ghost" href="/portfolio/resume.html" target="_blank" rel="noreferrer">View resume</a>
+            <div className="eyebrow"><i /> SOFTWARE ENGINEER · DATA SCIENCE</div>
+            <h1>I build <em>useful systems</em> with clean code and thoughtful interfaces.</h1>
+            <p className="hero-lead">I'm Inshal Ashraf — a B.Tech CSE (Data Science) student at SRMIST focused on backend engineering, DSA and data-driven applications.</p>
+            <div className="hero-actions"><a className="button primary" href="#projects">Explore my work <span>→</span></a><a className="button ghost" href="/portfolio/resume.html" target="_blank" rel="noreferrer">View resume</a></div>
+            <div className="social-row"><a href="https://github.com/inshalashraf" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noreferrer">LeetCode ↗</a><a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noreferrer">HackerRank ↗</a></div>
+          </div>
+          <div className="hero-visual">
+            <div className="flight-card">
+              <div className="flight-top"><span>IA</span><small>BOARDING PASS / 2026</small></div>
+              <div className="route"><div><small>PASSENGER</small><strong>INSHAL</strong></div><b>✦</b><div><small>ROLE</small><strong>SWE INTERN</strong></div></div>
+              <div className="flight-meta"><span><small>FROM</small>SRMIST</span><span><small>TO</small>SOFTWARE</span><span><small>CLASS</small>FIRST</span><span><small>SEQ</small>0927</span></div>
+              <div className="barcode">|||| ||| |||| | ||| || |||| |||</div>
             </div>
-            <div className="social-row">
-              <a href="https://github.com/inshalashraf" target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noreferrer">LeetCode ↗</a>
-              <a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noreferrer">HackerRank ↗</a>
-            </div>
-          </div>
-          <div className="hero-card">
-            <div className="code-top"><span /><span /><span /><small>inshal.py</small></div>
-            <pre>{`class Inshal:
-    role = "Software Engineer"
-    focus = [
-        "Backend",
-        "DSA",
-        "Data Science"
-    ]
+            <div className="terminal-card"><div className="terminal-head"><span>● ● ●</span><small>inshal@portfolio:~</small></div><pre>{`$ neofetch
+OS       → Developer Mode
+Focus    → Backend / DSA / ML
+CGPA     → 9.27 / 10
+Solved   → 104+ LeetCode
+Status   → OPEN TO OPPORTUNITIES
 
-    def build(self):
-        return "impactful software"`}</pre>
-            <div className="availability"><b /> Open to internship opportunities</div>
+$ echo "let's build"`}</pre><div className="terminal-caret">_</div></div>
           </div>
         </section>
 
-        <section id="about" className="section section-wrap">
-          <div className="section-label">01 / ABOUT</div>
-          <div className="two-col">
-            <div><h2>Curious by nature.<br /><span>Engineer by practice.</span></h2></div>
-            <div className="body-copy"><p>I am a B.Tech CSE (Data Science) student at SRM Institute of Science and Technology, graduating in 2028 with a <strong>9.27/10 CGPA</strong>.</p><p>I enjoy taking ideas from a rough problem statement to a working product — designing the logic, building the backend, working with databases, and making the result dependable.</p><p>Alongside development, I actively practice problem solving and explore machine learning and data-driven systems.</p></div>
-          </div>
-          <div className="stats"><div><strong>9.27</strong><span>CGPA / 10</span></div><div><strong>104+</strong><span>LeetCode problems</span></div><div><strong>3★</strong><span>HackerRank Problem Solving</span></div><div><strong>2028</strong><span>Expected graduation</span></div></div>
-        </section>
+        <section id="about" className="section section-wrap reveal"><div className="section-label">01 / ABOUT</div><div className="two-col"><div><h2>Curious by nature.<br /><span>Engineer by practice.</span></h2></div><div className="body-copy"><p>I am a B.Tech CSE (Data Science) student at SRM Institute of Science and Technology, graduating in 2028 with a <strong>9.27/10 CGPA</strong>.</p><p>I enjoy taking ideas from a rough problem statement to a working product — designing the logic, building the backend, working with databases, and making the result dependable.</p><p>Alongside development, I actively practice problem solving and explore machine learning and data-driven systems.</p></div></div><div className="stats"><div><strong>9.27</strong><span>CGPA / 10</span></div><div><strong>104+</strong><span>LeetCode problems</span></div><div><strong>3★</strong><span>HackerRank Problem Solving</span></div><div><strong>2028</strong><span>Expected graduation</span></div></div></section>
 
-        <section id="experience" className="section section-wrap dark-section">
-          <div className="section-label">02 / EXPERIENCE</div>
-          <h2>Where I've been <span>&amp; what I've learned.</span></h2>
-          <div className="timeline">{experience.map((item, i) => <article className="timeline-item" key={item.company}><div className="timeline-marker">0{i + 1}</div><div className="timeline-content"><div className="period">{item.period}</div><h3>{item.role}</h3><h4>{item.company}</h4><p>{item.text}</p></div></article>)}</div>
-        </section>
+        <section id="experience" className="section section-wrap dark-section reveal"><div className="section-label">02 / EXPERIENCE</div><h2>Where I've been <span>&amp; what I've learned.</span></h2><div className="timeline">{experience.map((item, i) => <article className="timeline-item" key={item.company}><div className="timeline-marker">0{i + 1}</div><div className="timeline-content"><div className="period">{item.period}</div><h3>{item.role}</h3><h4>{item.company}</h4><p>{item.text}</p></div></article>)}</div></section>
 
-        <section id="projects" className="section section-wrap">
-          <div className="section-label">03 / SELECTED WORK</div>
-          <div className="section-heading"><div><h2>Things I've <span>built.</span></h2></div><p>A selection of academic and personal projects spanning software engineering, backend development and data science.</p></div>
-          <div className="project-grid">{projects.map((project, i) => <article className="project-card" key={project.title}><div className="project-number">0{i + 1}</div><div className="project-type">{project.type}</div><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><a href={project.repo} target="_blank" rel="noreferrer">View project <span>↗</span></a></article>)}</div>
-        </section>
+        <section id="projects" className="section section-wrap reveal"><div className="section-label">03 / SELECTED WORK</div><div className="section-heading"><div><h2>Things I've <span>built.</span></h2></div><p>A selection of academic and personal projects spanning software engineering, backend development and data science.</p></div><div className="project-grid">{projects.map((project, i) => <article className="project-card" key={project.title}><div className="project-number">0{i + 1}</div><div className="project-type">{project.type}</div><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><a href={project.repo} target="_blank" rel="noreferrer">View project <span>↗</span></a></article>)}</div></section>
 
-        <section id="skills" className="section section-wrap skills-section">
-          <div className="section-label">04 / TOOLKIT</div><h2>My <span>stack.</span></h2>
-          <div className="skill-grid">{skillGroups.map(group => <div className="skill-group" key={group[0]}><h3>{group[0]}</h3><div>{group.slice(1).map(skill => <span key={skill}>{skill}</span>)}</div></div>)}</div>
-        </section>
+        <section id="skills" className="section section-wrap skills-section reveal"><div className="section-label">04 / TOOLKIT</div><h2>My <span>stack.</span></h2><div className="skill-grid">{skillGroups.map(group => <div className="skill-group" key={group[0]}><h3>{group[0]}</h3><div>{group.slice(1).map(skill => <span key={skill}>{skill}</span>)}</div></div>)}</div></section>
 
-        <section className="section section-wrap credentials"><div className="section-label">05 / CREDENTIALS</div><div className="credential-grid"><div><h3>Education</h3><p><strong>SRM Institute of Science and Technology</strong><br />B.Tech CSE (Data Science) · 2024–2028<br />CGPA: 9.27 / 10</p></div><div><h3>Certifications</h3><p>SAP Certified Data Analyst — SAP Analytics Cloud<br />Oracle University Certified Data Science Professional<br />NPTEL OOP Fundamentals — IIT Roorkee<br />NPTEL Programming in Java — IIT Kharagpur<br />Meta Introduction to Databases — Coursera</p></div><div><h3>Recognition</h3><p>22nd rank across CSE/CSE-related specializations at SRMIST KTR Campus in employability assessment.<br />HackerRank 3★ Problem Solving · 2★ Java</p></div></div></section>
+        <section className="section section-wrap credentials reveal"><div className="section-label">05 / CREDENTIALS</div><div className="credential-grid"><div><h3>Education</h3><p><strong>SRM Institute of Science and Technology</strong><br />B.Tech CSE (Data Science) · 2024–2028<br />CGPA: 9.27 / 10</p></div><div><h3>Certifications</h3><p>SAP Certified Data Analyst — SAP Analytics Cloud<br />Oracle University Certified Data Science Professional<br />NPTEL OOP Fundamentals — IIT Roorkee<br />NPTEL Programming in Java — IIT Kharagpur<br />Meta Introduction to Databases — Coursera</p></div><div><h3>Recognition</h3><p>22nd rank across CSE/CSE-related specializations at SRMIST KTR Campus in employability assessment.<br />HackerRank 3★ Problem Solving · 2★ Java</p></div></div></section>
 
-        <section id="contact" className="contact section-wrap"><div className="section-label">06 / CONTACT</div><h2>Let's build something<br /><em>worth shipping.</em></h2><p>I'm currently looking for software engineering and backend internship opportunities where I can learn, contribute, and grow.</p><a className="email-link" href="mailto:mdinshalashraf@gmail.com">mdinshalashraf@gmail.com <span>↗</span></a><div className="contact-links"><a href="https://github.com/inshalashraf" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noreferrer">LeetCode</a><a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noreferrer">HackerRank</a></div></section>
+        <section id="contact" className="contact section-wrap reveal"><div className="section-label">06 / CONTACT</div><h2>Let's build something<br /><em>worth shipping.</em></h2><p>I'm currently looking for software engineering and backend internship opportunities where I can learn, contribute, and grow.</p><a className="email-link" href="mailto:mdinshalashraf@gmail.com">mdinshalashraf@gmail.com <span>↗</span></a><div className="contact-links"><a href="https://github.com/inshalashraf" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noreferrer">LeetCode</a><a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noreferrer">HackerRank</a></div></section>
       </main>
-
-      <footer><span>© 2026 Inshal Ashraf</span><span>Designed &amp; built with purpose.</span><a href="#home">Back to top ↑</a></footer>
+      <footer><span>© 2026 Inshal Ashraf</span><span>DESIGNED TO PERFORM</span><a href="#home">Back to top ↑</a></footer>
     </div>
   )
 }
