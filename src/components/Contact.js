@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap"
-import { Envelope, Github, Linkedin, FileEarmarkText } from "react-bootstrap-icons"
+import { Envelope, Github, Linkedin, FileEarmarkText, CodeSlash } from "react-bootstrap-icons"
 
 export const Contact = () => (
     <section className="contact" id="contact">
@@ -13,6 +13,7 @@ export const Contact = () => (
                         <a className="contact-button" href="mailto:mdinshalashraf@gmail.com"><Envelope /> &nbsp;Email Me</a>
                         <a className="contact-button" href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noopener noreferrer"><Linkedin /> &nbsp;LinkedIn</a>
                         <a className="contact-button" href="https://github.com/inshalashraf" target="_blank" rel="noopener noreferrer"><Github /> &nbsp;GitHub</a>
+                        <a className="contact-button" href="https://github.com/inshalashraf/leetcode-solutions" target="_blank" rel="noopener noreferrer"><CodeSlash /> &nbsp;LeetCode Solutions</a>
                         <a className="contact-button" href="/portfolio/resume.html" target="_blank" rel="noopener noreferrer"><FileEarmarkText /> &nbsp;Resume</a>
                     </div>
                 </div>
