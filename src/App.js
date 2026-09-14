@@ -25,6 +25,49 @@ const skillGroups = [
   ['Tools', 'Git', 'GitHub', 'Maven', 'Gradle']
 ]
 
+const terminalResponses = {
+  help: ['about       → who I am', 'projects    → selected work', 'skills      → technical toolkit', 'experience  → internships & leadership', 'contact     → ways to reach me', 'clear       → clear terminal'],
+  about: ['Inshal Ashraf', 'B.Tech CSE (Data Science) · SRMIST · 2024–2028', 'Focused on backend engineering, DSA and data-driven systems.', 'CGPA: 9.27 / 10'],
+  projects: ['GradeHub · Java / Swing / MySQL', 'Online Language Translator · Java / REST / SQLite', 'Predictive Marketing · Python / ML / EDA', 'BookMyStay · Java / OOP', 'Train Management App · Java / CLI'],
+  skills: ['Python · Java · TypeScript · JavaScript · SQL', 'REST APIs · Next.js · JDBC · HTTP', 'PostgreSQL · MySQL · SQLite', 'DSA · OOP · DBMS · OS · Computer Networks', 'Machine Learning · EDA · Forecasting · Git / GitHub'],
+  experience: ['Icebrkr — Backend Developer Intern · Jul 2026–Present', 'Usha Martin — Backend Development Intern · Jun–Jul 2026', 'Newton School Coding Club — Associate Director · Oct 2024–Present'],
+  contact: ['Email     → mdinshalashraf@gmail.com', 'GitHub    → github.com/inshalashraf', 'LinkedIn  → linkedin.com/in/md-inshal-ashraf-0b85a92bb', 'LeetCode  → leetcode.com/u/InshalxD/']
+}
+
+function InteractiveTerminal() {
+  const [history, setHistory] = useState([])
+  const [input, setInput] = useState('')
+  const [booted, setBooted] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setBooted(true), 700)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const runCommand = command => {
+    const cmd = command.trim().toLowerCase()
+    if (!cmd) return
+    if (cmd === 'clear') { setHistory([]); return }
+    const response = terminalResponses[cmd] || [`command not found: ${cmd}`, 'Type “help” to see available commands.']
+    setHistory(prev => [...prev, { cmd, response }])
+  }
+
+  return (
+    <div className={`interactive-terminal ${booted ? 'booted' : ''}`}>
+      <div className="terminal-head"><span>● ● ●</span><small>inshal@portfolio:~</small><b>INTERACTIVE</b></div>
+      <div className="terminal-body">
+        <div className="terminal-welcome">{booted && <><span>INSHAL.OS v1.0</span><small>Type <strong>help</strong> to explore</small></>}</div>
+        <div className="terminal-history">
+          {history.map((item, index) => <div className="terminal-command" key={`${item.cmd}-${index}`}><div><i>inshal@portfolio</i>:~$ {item.cmd}</div>{item.response.map((line, lineIndex) => <div className="terminal-output" key={lineIndex}>{line}</div>)}</div>)}
+        </div>
+        <form onSubmit={e => { e.preventDefault(); runCommand(input); setInput('') }} className="terminal-input-row">
+          <span>inshal@portfolio:~$</span><input value={input} onChange={e => setInput(e.target.value)} aria-label="Portfolio terminal command" autoComplete="off" spellCheck="false" placeholder="type a command..." />
+        </form>
+      </div>
+    </div>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -69,14 +112,7 @@ function App() {
               <div className="flight-meta"><span><small>FROM</small>SRMIST</span><span><small>TO</small>SOFTWARE</span><span><small>CLASS</small>FIRST</span><span><small>SEQ</small>0927</span></div>
               <div className="barcode">|||| ||| |||| | ||| || |||| |||</div>
             </div>
-            <div className="terminal-card"><div className="terminal-head"><span>● ● ●</span><small>inshal@portfolio:~</small></div><pre>{`$ neofetch
-OS       → Developer Mode
-Focus    → Backend / DSA / ML
-CGPA     → 9.27 / 10
-Solved   → 104+ LeetCode
-Status   → OPEN TO OPPORTUNITIES
-
-$ echo "let's build"`}</pre><div className="terminal-caret">_</div></div>
+            <InteractiveTerminal />
           </div>
         </section>
 
