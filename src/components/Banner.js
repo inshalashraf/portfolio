@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Col, Container, Row } from "react-bootstrap"
-import { ArrowRightCircle, Download, Github, Linkedin } from "react-bootstrap-icons"
+import { ArrowRightCircle, Download, Github, Linkedin, CodeSlash } from "react-bootstrap-icons"
 import headerImg from '../assets/img/header-img.svg'
 
 export const Banner = () => {
@@ -54,6 +54,7 @@ export const Banner = () => {
                         <div className="hero-links">
                             <a href="https://github.com/inshalashraf" target="_blank" rel="noopener noreferrer"><Github /> GitHub</a>
                             <a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noopener noreferrer"><Linkedin /> LinkedIn</a>
+                            <a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noopener noreferrer"><CodeSlash /> LeetCode</a>
                         </div>
                     </Col>
                     <Col lg={5} className="hero-image-col">
