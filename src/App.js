@@ -78,6 +78,21 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
+    const updateProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const progress = max > 0 ? (window.scrollY / max) * 100 : 0
+      document.documentElement.style.setProperty('--scroll-progress', `${progress}%`)
+    }
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+    return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [])
+
+  useEffect(() => {
     const reveal = document.querySelectorAll('.reveal')
     if (!('IntersectionObserver' in window)) {
       reveal.forEach(el => el.classList.add('visible'))
@@ -95,7 +110,7 @@ function App() {
   }
 
   return (
-    <div className="site-shell" onMouseMove={moveGlow}>
+    <div className="site-shell" onMouseMove={moveGlow}>\n      <div className="scroll-progress" aria-hidden="true" />
       <div className="cursor-glow" aria-hidden="true" />
       <nav className="nav" aria-label="Primary navigation">
         <a className="brand" href="#home" onClick={closeMenu}><span aria-hidden="true">IA</span> INSHAL ASHRAF</a>
@@ -109,11 +124,11 @@ function App() {
       <main id="main-content">
         <section id="home" className="hero section-wrap" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <div className="eyebrow"><i aria-hidden="true" /> SOFTWARE ENGINEER · DATA SCIENCE</div>
+            <div className="eyebrow"><i aria-hidden="true" /> SOFTWARE ENGINEER · DATA SCIENCE <span className="availability"><b aria-hidden="true" /> OPEN TO OPPORTUNITIES</span></div>
             <h1 id="hero-title">I build <em>useful systems</em> with clean code and thoughtful interfaces.</h1>
             <p className="hero-lead">I'm Inshal Ashraf — a B.Tech CSE (Data Science) student at SRMIST focused on backend engineering, DSA and data-driven applications.</p>
             <div className="hero-actions"><a className="button primary" href="#projects">Explore my work <span aria-hidden="true">→</span></a><a className="button ghost" href="/portfolio/resume.html" target="_blank" rel="noopener noreferrer">View resume</a></div>
-            <div className="social-row"><a href="https://github.com/inshalashraf" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GitHub ↗</a><a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">LinkedIn ↗</a><a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile">LeetCode ↗</a><a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noopener noreferrer" aria-label="HackerRank profile">HackerRank ↗</a></div>
+            <div className="quick-facts"><span>9.27 CGPA</span><span>104+ LeetCode</span><span>Python-first</span></div><div className="social-row"><a href="https://github.com/inshalashraf" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GitHub ↗</a><a href="https://www.linkedin.com/in/md-inshal-ashraf-0b85a92bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">LinkedIn ↗</a><a href="https://leetcode.com/u/InshalxD/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile">LeetCode ↗</a><a href="https://www.hackerrank.com/profile/mdinshalashraf" target="_blank" rel="noopener noreferrer" aria-label="HackerRank profile">HackerRank ↗</a></div>
           </div>
           <div className="hero-visual">
             <div className="flight-card" aria-label="Portfolio boarding pass">
