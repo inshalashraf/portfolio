@@ -61,7 +61,7 @@ function InteractiveTerminal() {
     <div className={`interactive-terminal ${booted ? 'booted' : ''}`}>
       <div className="terminal-head"><span aria-hidden="true">● ● ●</span><small>inshal@portfolio:~</small><b>INTERACTIVE</b></div>
       <div className="terminal-body">
-        <div className="terminal-welcome">{booted && <><span>INSHAL.OS v1.0</span><small>Type <strong>help</strong> to explore</small></>}</div>
+        <div className="terminal-welcome">{booted && <><span>INSHAL.OS v1.0</span><small>Type <strong>help</strong> to explore</small><div className="terminal-shortcuts" aria-label="Terminal shortcuts">{['about', 'projects', 'skills', 'experience', 'contact'].map(command => <button type="button" key={command} onClick={() => runCommand(command)}>{command}</button>)}</div></>}</div>
         <div className="terminal-history" aria-live="polite">
           {history.map((item, index) => <div className="terminal-command" key={`${item.cmd}-${index}`}><div><i>inshal@portfolio</i>:~$ {item.cmd}</div>{item.response.map((line, lineIndex) => <div className="terminal-output" key={lineIndex}>{line}</div>)}</div>)}
         </div>
